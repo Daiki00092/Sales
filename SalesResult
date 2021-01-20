@@ -1,0 +1,75 @@
+
+public class SalesResult {
+
+	public static void main(String[] args) {
+
+		//引数が4個以外の場合、このブロック外の処理を実行しない。
+		if (args.length != 4) {
+			System.out.println("**実行方法**");
+			System.out.println(">java SalesResult <日付> <東京の売上> <大阪の売上> <名古屋の売上>");
+			return;
+		}
+
+		String date = args[0];	//日付(引数の1番目)
+
+		//東京,大阪,名古屋の売り上げを配列に格納
+		int[] records = new int[3];
+
+		//配列records[]にargs[1]からの引数を格納していく
+		for (int i = 0; i < records.length; i++) {
+			records[i] = Integer.parseInt(args[i + 1]);
+		}
+
+		int total = 0;//合計値の初期化
+		//繰り返しを使った合計値の過程、出力
+		for (int i = 0; i < records.length; i++) {
+			System.out.println("["+i+"] total ⇨ " + total);
+			total += records[i];
+		}
+		//合計値と配列の個数を引数にdivisorを渡し、double型の戻り値を受け取る
+		double average = getAverage(total, records.length);
+
+		//最終結果の出力
+		System.out.println("**"+date+"**");
+		System.out.println("合計 :" + total);
+		System.out.println("平均 :" + average);
+
+		//records内の売上をそれぞれ引数にget**Valueに渡す
+		int max = getMaxValue(records[0],records[1],records[2]);
+		int min = getMinValue(records[0], records[1], records[2]);
+
+		//最大値,最小値を求めた後の値を出力
+		System.out.println("最大値 :"+max);
+		System.out.println("最小値 :"+min);
+	}
+	//平均値を求めるメソッド
+	private static double getAverage(int total ,double divisor) {
+		//平均の算出((int) < (double)のデータ型なので、暗黙的型変換可能。)
+		double average = total / divisor;
+		return average;
+	}
+	//for文を使用しない場合の比較,最大値ver
+	private static int getMaxValue(int tempo1,int tempo2,int tempo3) {
+		if (tempo1 > tempo2 && tempo1 > tempo3) {
+			return tempo1;
+		}else {
+			if (tempo2 > tempo3) {
+				return tempo2;
+			}else {
+				return tempo3;
+			}
+		}
+	}
+	//for文を使用しない場合の比較,最小値ver
+	private static int getMinValue(int tempo1,int tempo2,int tempo3) {
+		if (tempo1 < tempo2 && tempo1 < tempo3) {
+			return tempo1;
+		}else {
+			if (tempo2 < tempo3) {
+				return tempo2;
+			}else {
+				return tempo3;
+			}
+		}
+	}
+}
